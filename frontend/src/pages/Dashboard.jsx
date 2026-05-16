@@ -1,50 +1,31 @@
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 import API from "../services/api";
 
 export default function Dashboard() {
     const [stats, setStats] = useState({ total: 0, completed: 0, inProgress: 0, overdue: 0 });
-    const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
         API.get("/dashboard").then((res) => setStats(res.data));
     }, []);
 
-    const logout = () => {
-        localStorage.clear();
-        navigate("/login");
-    };
+    const cards = [
+        { label: "Total Tasks", value: stats.total, color: "#4f46e5", bg: "#ede9fe" },
+        { label: "Completed", value: stats.completed, color: "#059669", bg: "#d1fae5" },
+        { label: "In Progress", value: stats.inProgress, color: "#d97706", bg: "#fef3c7" },
+        { label: "Overdue", value: stats.overdue, color: "#dc2626", bg: "#fee2e2" },
+    ];
 
     return (
-        <div style={{ padding: 24 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <h2>Welcome, {user?.name}</h2>
-                <button onClick={logout} style={{ padding: "8px 16px", background: "red", color: "white", border: "none", borderRadius: 4 }}>Logout</button>
-            </div>
-            <nav style={{ marginBottom: 24 }}>
-                <Link to="/" style={{ marginRight: 16 }}>Dashboard</Link>
-                <Link to="/projects" style={{ marginRight: 16 }}>Projects</Link>
-                <Link to="/tasks">Tasks</Link>
-            </nav>
-            <div style={{ display: "flex", gap: 16 }}>
-                <div style={{ padding: 24, background: "#f0f0f0", borderRadius: 8, flex: 1 }}>
-                    <h3>Total Tasks</h3>
-                    <p style={{ fontSize: 32 }}>{stats.total}</p>
-                </div>
-                <div style={{ padding: 24, background: "#d1fae5", borderRadius: 8, flex: 1 }}>
-                    <h3>Completed</h3>
-                    <p style={{ fontSize: 32 }}>{stats.completed}</p>
-                </div>
-                <div style={{ padding: 24, background: "#fef3c7", borderRadius: 8, flex: 1 }}>
-                    <h3>In Progress</h3>
-                    <p style={{ fontSize: 32 }}>{stats.inProgress}</p>
-                </div>
-                <div style={{ padding: 24, background: "#fee2e2", borderRadius: 8, flex: 1 }}>
-                    <h3>Overdue</h3>
-                    <p style={{ fontSize: 32 }}>{stats.overdue}</p>
-                </div>
-            </div>
-        </div>
-    );
-}
+        <div style={{ minHeight: "100vh", background: "#f8fafc" }}>
+            <Navbar />
+            <div style={{ padding: "32px 24px" }}>
+                <h2 style={{ marginBottom: 8, color: "#1e293b" }}>Welcome back, {user?.name} 👋</h2>
+                <p style={{ color: "#64748b", marginBottom: 32 }}>Here's your task overview for today.</p>
+                <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
+                    {cards.map((card) => (
+                        <div key={card.label} style={{
+                            flex: "1 1 180px",
+                            background: card.bg,
+                            borderRadius:
