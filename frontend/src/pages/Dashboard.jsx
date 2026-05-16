@@ -28,4 +28,16 @@ export default function Dashboard() {
                         <div key={card.label} style={{
                             flex: "1 1 180px",
                             background: card.bg,
-                            borderRadius:
+                            borderRadius: 12,
+                            padding: 24,
+                            borderLeft: `4px solid ${card.color}`
+                        }}>
+                            <p style={{ color: "#64748b", marginBottom: 8, fontWeight: 500 }}>{card.label}</p>
+                            <p style={{ fontSize: 40, fontWeight: "bold", color: card.color, margin: 0 }}>{card.value}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+}
