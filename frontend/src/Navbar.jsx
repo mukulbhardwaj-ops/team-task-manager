@@ -94,7 +94,7 @@ export default function Navbar() {
 
                 <button onClick={logout} style={{
                     padding: "8px 16px",
-                    background: "rgba(239,68,68,0.15)",
+                    background: "rgba(15,15,26,0.95)",
                     border: "1px solid rgba(239,68,68,0.3)",
                     color: "#f87171",
                     borderRadius: 10,

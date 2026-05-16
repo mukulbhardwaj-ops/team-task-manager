@@ -51,125 +51,148 @@ export default function Tasks() {
     };
 
     const statusColors = {
-        TODO: { bg: "#f1f5f9", color: "#475569" },
-        IN_PROGRESS: { bg: "#fef3c7", color: "#d97706" },
-        DONE: { bg: "#d1fae5", color: "#059669" },
+        TODO: { bg: "rgba(99,102,241,0.12)", color: "#818cf8", border: "rgba(99,102,241,0.25)" },
+        IN_PROGRESS: { bg: "rgba(245,158,11,0.12)", color: "#fbbf24", border: "rgba(245,158,11,0.25)" },
+        DONE: { bg: "rgba(16,185,129,0.12)", color: "#34d399", border: "rgba(16,185,129,0.25)" },
+    };
+
+    const inputStyle = {
+        padding: "10px 14px",
+        borderRadius: 10,
+        border: "1px solid rgba(255,255,255,0.1)",
+        background: "rgba(255,255,255,0.06)",
+        color: "white",
+        fontSize: 14,
+        outline: "none"
     };
 
     return (
-        <div style={{ minHeight: "100vh", background: "#f8fafc" }}>
-            <Navbar />
-            <div style={{ padding: "32px 24px" }}>
-                <h2 style={{ color: "#1e293b", marginBottom: 24 }}>Tasks</h2>
+        <div style={{ minHeight: "100vh", background: "#0f0f1a", fontFamily: "'Segoe UI', sans-serif" }}>
+            <div style={{ position: "fixed", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
+                <div style={{ position: "absolute", width: 400, height: 400, borderRadius: "50%", background: "rgba(79,70,229,0.07)", top: -100, right: -100, filter: "blur(80px)" }} />
+                <div style={{ position: "absolute", width: 400, height: 400, borderRadius: "50%", background: "rgba(124,58,237,0.07)", bottom: -100, left: -100, filter: "blur(80px)" }} />
+            </div>
 
-                {user?.role === "ADMIN" && (
-                    <div style={{
-                        background: "white",
-                        padding: 24,
-                        borderRadius: 12,
-                        boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
-                        marginBottom: 24,
-                        display: "flex",
-                        gap: 12,
-                        flexWrap: "wrap"
-                    }}>
-                        <input placeholder="Task title" value={form.title}
-                            style={{ flex: 1, minWidth: 150, padding: "10px 12px", borderRadius: 8, border: "1px solid #e2e8f0", fontSize: 14 }}
-                            onChange={(e) => setForm({ ...form, title: e.target.value })} />
-                        <input placeholder="Description" value={form.description}
-                            style={{ flex: 2, minWidth: 150, padding: "10px 12px", borderRadius: 8, border: "1px solid #e2e8f0", fontSize: 14 }}
-                            onChange={(e) => setForm({ ...form, description: e.target.value })} />
-                        <input type="date" value={form.dueDate}
-                            style={{ padding: "10px 12px", borderRadius: 8, border: "1px solid #e2e8f0", fontSize: 14 }}
-                            onChange={(e) => setForm({ ...form, dueDate: e.target.value })} />
-                        <input placeholder="User ID" value={form.assignedTo}
-                            style={{ width: 90, padding: "10px 12px", borderRadius: 8, border: "1px solid #e2e8f0", fontSize: 14 }}
-                            onChange={(e) => setForm({ ...form, assignedTo: e.target.value })} />
-                        <select value={form.projectId}
-                            style={{ padding: "10px 12px", borderRadius: 8, border: "1px solid #e2e8f0", fontSize: 14 }}
-                            onChange={(e) => setForm({ ...form, projectId: e.target.value })}>
-                            <option value="">Select Project</option>
-                            {projects.map((p) => (
-                                <option key={p.id} value={p.id}>{p.name}</option>
-                            ))}
-                        </select>
-                        <button onClick={createTask} style={{
-                            padding: "10px 20px",
-                            background: "#4f46e5",
-                            color: "white",
-                            border: "none",
-                            borderRadius: 8,
-                            fontWeight: "bold",
-                            cursor: "pointer"
+            <div style={{ position: "relative", zIndex: 1 }}>
+                <Navbar />
+                <div style={{ padding: "32px" }}>
+                    <h2 style={{ color: "white", marginBottom: 24, fontSize: 24, fontWeight: "bold" }}>✅ Tasks</h2>
+
+                    {user?.role === "ADMIN" && (
+                        <div style={{
+                            background: "rgba(255,255,255,0.04)",
+                            border: "1px solid rgba(255,255,255,0.08)",
+                            padding: 20,
+                            borderRadius: 16,
+                            marginBottom: 24,
+                            display: "flex",
+                            gap: 12,
+                            flexWrap: "wrap",
+                            alignItems: "center"
                         }}>
-                            + Create Task
-                        </button>
-                    </div>
-                )}
-
-                {loading ? (
-                    <p style={{ color: "#64748b" }}>Loading tasks...</p>
-                ) : tasks.length === 0 ? (
-                    <p style={{ color: "#64748b" }}>No tasks yet.</p>
-                ) : (
-                    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                        {tasks.map((t) => (
-                            <div key={t.id} style={{
-                                background: "white",
-                                padding: 20,
-                                borderRadius: 12,
-                                boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                flexWrap: "wrap",
-                                gap: 12
+                            <input placeholder="Task title" value={form.title} style={{ ...inputStyle, flex: 1, minWidth: 140 }}
+                                onChange={(e) => setForm({ ...form, title: e.target.value })} />
+                            <input placeholder="Description" value={form.description} style={{ ...inputStyle, flex: 2, minWidth: 140 }}
+                                onChange={(e) => setForm({ ...form, description: e.target.value })} />
+                            <input type="date" value={form.dueDate} style={inputStyle}
+                                onChange={(e) => setForm({ ...form, dueDate: e.target.value })} />
+                            <input placeholder="User ID" value={form.assignedTo} style={{ ...inputStyle, width: 80 }}
+                                onChange={(e) => setForm({ ...form, assignedTo: e.target.value })} />
+                            <select value={form.projectId} style={{ ...inputStyle }}
+                                onChange={(e) => setForm({ ...form, projectId: e.target.value })}>
+                                <option value="" style={{ background: "#1e1e2e" }}>Select Project</option>
+                                {projects.map((p) => (
+                                    <option key={p.id} value={p.id} style={{ background: "#1e1e2e" }}>{p.name}</option>
+                                ))}
+                            </select>
+                            <button onClick={createTask} style={{
+                                padding: "10px 20px",
+                                background: "linear-gradient(135deg, #4f46e5, #7c3aed)",
+                                color: "white",
+                                border: "none",
+                                borderRadius: 10,
+                                fontWeight: "bold",
+                                cursor: "pointer",
+                                fontSize: 14,
+                                whiteSpace: "nowrap"
                             }}>
-                                <div style={{ flex: 1 }}>
-                                    <h3 style={{ margin: 0, color: "#1e293b" }}>{t.title}</h3>
-                                    <p style={{ margin: "4px 0 0", color: "#64748b", fontSize: 14 }}>{t.description}</p>
-                                    <div style={{ marginTop: 8, fontSize: 13, color: "#94a3b8" }}>
-                                        <span>📁 {t.project?.name}</span>
-                                        <span style={{ marginLeft: 16 }}>👤 {t.assignee?.name}</span>
-                                        <span style={{ marginLeft: 16 }}>📅 {new Date(t.dueDate).toLocaleDateString()}</span>
+                                + Create Task
+                            </button>
+                        </div>
+                    )}
+
+                    {loading ? (
+                        <div style={{ display: "flex", justifyContent: "center", padding: 60 }}>
+                            <div style={{ width: 36, height: 36, border: "3px solid rgba(255,255,255,0.1)", borderTop: "3px solid #6366f1", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+                        </div>
+                    ) : tasks.length === 0 ? (
+                        <p style={{ color: "rgba(255,255,255,0.4)", textAlign: "center", padding: 60 }}>No tasks yet.</p>
+                    ) : (
+                        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                            {tasks.map((t) => (
+                                <div key={t.id} style={{
+                                    background: "rgba(255,255,255,0.04)",
+                                    border: "1px solid rgba(255,255,255,0.08)",
+                                    padding: "18px 22px",
+                                    borderRadius: 14,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    flexWrap: "wrap",
+                                    gap: 12
+                                }}>
+                                    <div style={{ flex: 1 }}>
+                                        <h3 style={{ margin: 0, color: "white", fontSize: 15, fontWeight: 600 }}>{t.title}</h3>
+                                        <p style={{ margin: "4px 0 0", color: "rgba(255,255,255,0.4)", fontSize: 13 }}>{t.description}</p>
+                                        <div style={{ marginTop: 8, fontSize: 12, color: "rgba(255,255,255,0.3)", display: "flex", gap: 16 }}>
+                                            <span>📁 {t.project?.name}</span>
+                                            <span>👤 {t.assignee?.name}</span>
+                                            <span>📅 {new Date(t.dueDate).toLocaleDateString()}</span>
+                                        </div>
+                                    </div>
+                                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                                        <span style={{
+                                            padding: "4px 12px",
+                                            borderRadius: 20,
+                                            fontSize: 12,
+                                            fontWeight: 600,
+                                            background: statusColors[t.status]?.bg,
+                                            color: statusColors[t.status]?.color,
+                                            border: `1px solid ${statusColors[t.status]?.border}`
+                                        }}>
+                                            {t.status.replace("_", " ")}
+                                        </span>
+                                        <select value={t.status} onChange={(e) => updateStatus(t.id, e.target.value)}
+                                            style={{ ...inputStyle, padding: "6px 10px", fontSize: 13 }}>
+                                            <option value="TODO" style={{ background: "#1e1e2e" }}>Todo</option>
+                                            <option value="IN_PROGRESS" style={{ background: "#1e1e2e" }}>In Progress</option>
+                                            <option value="DONE" style={{ background: "#1e1e2e" }}>Done</option>
+                                        </select>
+                                        {user?.role === "ADMIN" && (
+                                            <button onClick={() => deleteTask(t.id)} style={{
+                                                padding: "6px 14px",
+                                                background: "rgba(239,68,68,0.12)",
+                                                color: "#f87171",
+                                                border: "1px solid rgba(239,68,68,0.25)",
+                                                borderRadius: 8,
+                                                cursor: "pointer",
+                                                fontWeight: 600,
+                                                fontSize: 13
+                                            }}>
+                                                Delete
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
-                                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                                    <span style={{
-                                        padding: "4px 10px",
-                                        borderRadius: 20,
-                                        fontSize: 12,
-                                        fontWeight: "bold",
-                                        background: statusColors[t.status]?.bg,
-                                        color: statusColors[t.status]?.color
-                                    }}>
-                                        {t.status.replace("_", " ")}
-                                    </span>
-                                    <select value={t.status} onChange={(e) => updateStatus(t.id, e.target.value)}
-                                        style={{ padding: "6px 10px", borderRadius: 8, border: "1px solid #e2e8f0", fontSize: 13 }}>
-                                        <option value="TODO">Todo</option>
-                                        <option value="IN_PROGRESS">In Progress</option>
-                                        <option value="DONE">Done</option>
-                                    </select>
-                                    {user?.role === "ADMIN" && (
-                                        <button onClick={() => deleteTask(t.id)} style={{
-                                            padding: "6px 14px",
-                                            background: "#fee2e2",
-                                            color: "#dc2626",
-                                            border: "none",
-                                            borderRadius: 6,
-                                            cursor: "pointer",
-                                            fontWeight: "bold"
-                                        }}>
-                                            Delete
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
+            <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+        input::placeholder { color: rgba(255,255,255,0.25); }
+      `}</style>
         </div>
     );
 }
