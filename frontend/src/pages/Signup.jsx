@@ -35,7 +35,7 @@ export default function Signup() {
                 width: "100%",
                 maxWidth: 400
             }}>
-                <h1 style={{ color: "#4f46e5", marginBottom: 4 }}>🗂 TaskFlow</h1>
+                <h1 style={{ color: "#4f46e5", marginBottom: 4 }}>🗂 Ethara TaskFlow</h1>
                 <p style={{ color: "#64748b", marginBottom: 24 }}>Create your account</p>
                 {error && (
                     <div style={{ background: "#fee2e2", color: "#dc2626", padding: 12, borderRadius: 8, marginBottom: 16 }}>
