@@ -129,8 +129,18 @@ export default function Projects() {
                                             {p.name} →
                                         </h3>
                                         <p style={{ margin: "4px 0 0", color: "rgba(255,255,255,0.4)", fontSize: 13 }}>{p.description || "No description"}</p>
-                                        <span style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", marginTop: 6, display: "block" }}>
-                                            {p.tasks?.length || 0} tasks
+                                        <span style={{
+                                            display: "inline-block",
+                                            marginTop: 8,
+                                            padding: "3px 10px",
+                                            borderRadius: 20,
+                                            fontSize: 11,
+                                            fontWeight: 600,
+                                            background: p.tasks?.length > 0 ? "rgba(99,102,241,0.15)" : "rgba(255,255,255,0.05)",
+                                            color: p.tasks?.length > 0 ? "#818cf8" : "rgba(255,255,255,0.25)",
+                                            border: p.tasks?.length > 0 ? "1px solid rgba(99,102,241,0.25)" : "1px solid rgba(255,255,255,0.08)"
+                                        }}>
+                                            {p.tasks?.length || 0} {p.tasks?.length === 1 ? "task" : "tasks"}
                                         </span>
                                     </div>
                                     {user?.role === "ADMIN" && (
