@@ -24,56 +24,109 @@ export default function Login() {
     return (
         <div style={{
             minHeight: "100vh",
-            background: "#f8fafc",
+            background: "linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #2563eb 100%)",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
+            padding: 24
         }}>
             <div style={{
                 background: "white",
                 padding: 40,
-                borderRadius: 16,
-                boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
+                borderRadius: 20,
+                boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
                 width: "100%",
-                maxWidth: 400
+                maxWidth: 420
             }}>
-                <h1 style={{ color: "#4f46e5", marginBottom: 4 }}>🗂 Ethara TaskFlow</h1>
-                <p style={{ color: "#64748b", marginBottom: 24 }}>Sign in to your account</p>
+                <div style={{ textAlign: "center", marginBottom: 32 }}>
+                    <div style={{
+                        width: 60, height: 60,
+                        background: "linear-gradient(135deg, #4f46e5, #7c3aed)",
+                        borderRadius: 16,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 28,
+                        margin: "0 auto 16px"
+                    }}>🗂</div>
+                    <h1 style={{ color: "#1e293b", margin: 0, fontSize: 24, fontWeight: "bold" }}>Ethara TaskFlow</h1>
+                    <p style={{ color: "#64748b", marginTop: 8 }}>Sign in to your account</p>
+                </div>
+
                 {error && (
-                    <div style={{ background: "#fee2e2", color: "#dc2626", padding: 12, borderRadius: 8, marginBottom: 16 }}>
+                    <div style={{
+                        background: "#fee2e2",
+                        color: "#dc2626",
+                        padding: 12,
+                        borderRadius: 10,
+                        marginBottom: 20,
+                        fontSize: 14,
+                        textAlign: "center"
+                    }}>
                         {error}
                     </div>
                 )}
-                <input
-                    placeholder="Email"
-                    type="email"
-                    style={{ width: "100%", marginBottom: 12, padding: "10px 12px", borderRadius: 8, border: "1px solid #e2e8f0", fontSize: 14, boxSizing: "border-box" }}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                />
-                <input
-                    placeholder="Password"
-                    type="password"
-                    style={{ width: "100%", marginBottom: 20, padding: "10px 12px", borderRadius: 8, border: "1px solid #e2e8f0", fontSize: 14, boxSizing: "border-box" }}
-                    onChange={(e) => setForm({ ...form, password: e.target.value })}
-                />
+
+                <div style={{ marginBottom: 16 }}>
+                    <label style={{ display: "block", marginBottom: 6, color: "#374151", fontWeight: 500, fontSize: 14 }}>Email</label>
+                    <input
+                        placeholder="Enter your email"
+                        type="email"
+                        style={{
+                            width: "100%",
+                            padding: "12px 14px",
+                            borderRadius: 10,
+                            border: "1.5px solid #e2e8f0",
+                            fontSize: 14,
+                            boxSizing: "border-box",
+                            outline: "none",
+                            transition: "border 0.2s"
+                        }}
+                        onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    />
+                </div>
+
+                <div style={{ marginBottom: 24 }}>
+                    <label style={{ display: "block", marginBottom: 6, color: "#374151", fontWeight: 500, fontSize: 14 }}>Password</label>
+                    <input
+                        placeholder="Enter your password"
+                        type="password"
+                        style={{
+                            width: "100%",
+                            padding: "12px 14px",
+                            borderRadius: 10,
+                            border: "1.5px solid #e2e8f0",
+                            fontSize: 14,
+                            boxSizing: "border-box",
+                            outline: "none"
+                        }}
+                        onChange={(e) => setForm({ ...form, password: e.target.value })}
+                    />
+                </div>
+
                 <button
                     onClick={handleSubmit}
                     disabled={loading}
                     style={{
                         width: "100%",
-                        padding: "12px",
-                        background: "#4f46e5",
+                        padding: "13px",
+                        background: "linear-gradient(135deg, #4f46e5, #7c3aed)",
                         color: "white",
                         border: "none",
-                        borderRadius: 8,
+                        borderRadius: 10,
                         fontSize: 15,
                         fontWeight: "bold",
-                        cursor: "pointer"
+                        cursor: "pointer",
+                        boxShadow: "0 4px 15px rgba(79,70,229,0.4)"
                     }}>
-                    {loading ? "Signing in..." : "Sign In"}
+                    {loading ? "Signing in..." : "Sign In →"}
                 </button>
-                <p style={{ textAlign: "center", marginTop: 16, color: "#64748b" }}>
-                    Don't have an account? <Link to="/signup" style={{ color: "#4f46e5" }}>Sign up</Link>
+
+                <p style={{ textAlign: "center", marginTop: 20, color: "#64748b", fontSize: 14 }}>
+                    Don't have an account?{" "}
+                    <Link to="/signup" style={{ color: "#4f46e5", fontWeight: 600, textDecoration: "none" }}>
+                        Sign up
+                    </Link>
                 </p>
             </div>
         </div>
