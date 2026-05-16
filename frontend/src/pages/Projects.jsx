@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import API from "../services/api";
 
@@ -7,6 +8,7 @@ export default function Projects() {
     const [form, setForm] = useState({ name: "", description: "" });
     const [loading, setLoading] = useState(true);
     const user = JSON.parse(localStorage.getItem("user"));
+    const navigate = useNavigate();
 
     useEffect(() => {
         API.get("/projects").then((res) => {
@@ -96,7 +98,10 @@ export default function Projects() {
                                 alignItems: "center"
                             }}>
                                 <div>
-                                    <h3 style={{ margin: 0, color: "#1e293b" }}>{p.name}</h3>
+                                    <h3 style={{ margin: 0, color: "#4f46e5", cursor: "pointer" }}
+                                        onClick={() => navigate(`/projects/${p.id}`)}>
+                                        {p.name} →
+                                    </h3>
                                     <p style={{ margin: "4px 0 0", color: "#64748b", fontSize: 14 }}>{p.description || "No description"}</p>
                                     <span style={{ fontSize: 12, color: "#94a3b8" }}>{p.tasks?.length || 0} tasks</span>
                                 </div>
