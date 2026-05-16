@@ -4,6 +4,11 @@ const prisma = new PrismaClient();
 exports.createProject = async (req, res) => {
     try {
         const { name, description } = req.body;
+
+        if (!name) {
+            return res.status(400).json({ message: "Project name is required" });
+        }
+
         const project = await prisma.project.create({
             data: { name, description, createdBy: req.user.id },
         });
@@ -26,7 +31,11 @@ exports.getProjects = async (req, res) => {
 
 exports.deleteProject = async (req, res) => {
     try {
-        await prisma.project.delete({ where: { id: parseInt(req.params.id) } });
+        const id = parseInt(req.params.id);
+
+        await prisma.task.deleteMany({ where: { projectId: id } });
+        await prisma.project.delete({ where: { id } });
+
         res.json({ message: "Project deleted" });
     } catch (error) {
         res.status(500).json({ error: error.message });
