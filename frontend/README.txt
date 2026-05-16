@@ -41,3 +41,7 @@ POST /api/tasks
 PUT  /api/tasks/:id
 DELETE /api/tasks/:id
 GET  /api/dashboard
+
+## Developer
+Name: Mukul Bhardwaj  
+Email: mukul.bhardwaj@ethara.ai
