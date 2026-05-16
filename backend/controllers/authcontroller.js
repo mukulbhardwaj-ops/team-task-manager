@@ -6,7 +6,10 @@ const jwt = require("jsonwebtoken");
 exports.signup = async (req, res) => {
     try {
         const { name, email, password, role } = req.body;
-        console.log(req.body);
+
+        if (!name || !email || !password || !role) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
 
         const existingUser = await prisma.user.findUnique({
             where: { email },
@@ -42,6 +45,10 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ message: "Email and password are required" });
+        }
 
         const user = await prisma.user.findUnique({
             where: { email },
