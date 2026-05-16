@@ -21,17 +21,11 @@ export default function Dashboard() {
         <div style={{ minHeight: "100vh", background: "#f8fafc" }}>
             <Navbar />
             <div style={{ padding: "32px 24px" }}>
-                <h2 style={{ marginBottom: 8, color: "#1e293b" }}>Welcome back, {user?.name} 👋</h2>
-                <p style={{ color: "#64748b", marginBottom: 32 }}>Here's your task overview for today.</p>
+                <h2 style={{ marginBottom: 8, color: "#1e293b" }}>Welcome back, {user?.name}</h2>
+                <p style={{ color: "#64748b", marginBottom: 32 }}>Here is your task overview for today.</p>
                 <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
                     {cards.map((card) => (
-                        <div key={card.label} style={{
-                            flex: "1 1 180px",
-                            background: card.bg,
-                            borderRadius: 12,
-                            padding: 24,
-                            borderLeft: `4px solid ${card.color}`
-                        }}>
+                        <div key={card.label} style={{ flex: "1 1 180px", background: card.bg, borderRadius: 12, padding: 24, borderLeft: "4px solid " + card.color }}>
                             <p style={{ color: "#64748b", marginBottom: 8, fontWeight: 500 }}>{card.label}</p>
                             <p style={{ fontSize: 40, fontWeight: "bold", color: card.color, margin: 0 }}>{card.value}</p>
                         </div>
