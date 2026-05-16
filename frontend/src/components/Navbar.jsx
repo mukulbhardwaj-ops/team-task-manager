@@ -19,7 +19,7 @@ export default function Navbar() {
             color: "white"
         }}>
             <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
-                <span style={{ fontWeight: "bold", fontSize: 18 }}>🗂 TaskFlow</span>
+                <span style={{ fontWeight: "bold", fontSize: 18 }}>🗂 Ethara TaskFlow</span>
                 <Link to="/" style={{ color: "white", textDecoration: "none" }}>Dashboard</Link>
                 <Link to="/projects" style={{ color: "white", textDecoration: "none" }}>Projects</Link>
                 <Link to="/tasks" style={{ color: "white", textDecoration: "none" }}>Tasks</Link>
