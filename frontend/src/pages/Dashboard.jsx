@@ -14,7 +14,7 @@ export default function Dashboard() {
             setLoading(false);
         });
 
-        const bs = Array.from({ length: 3 }, (_, i) => ({
+        const bs = Array.from({ length: 1 }, (_, i) => ({
             id: i,
             x: Math.random() * 80 + 5,
             y: Math.random() * 80 + 5,
@@ -82,6 +82,10 @@ export default function Dashboard() {
           100% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes shimmer {
+          0%   { left: -100%; }
+          100% { left: 200%; }
+        }
       `}</style>
 
             <div style={{ position: "relative", zIndex: 1 }}>
@@ -102,7 +106,7 @@ export default function Dashboard() {
                         }}>
                             Welcome back, {user?.name} 👋
                         </h2>
-                        <p style={{ color: "rgba(255,255,255,0.4)", marginTop: 6, fontSize: 14 }}>
+                        <p style={{ color: "rgba(255,255,255,0.4)", marginTop: 6, fontSize: 13 }}>
                             {new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
                         </p>
                     </div>
@@ -120,7 +124,7 @@ export default function Dashboard() {
                                         background: card.bg,
                                         border: `1px solid ${card.border}`,
                                         borderRadius: 16,
-                                        padding: "20px 20px",
+                                        padding: "20px",
                                     }}>
                                         <div style={{ fontSize: 24, marginBottom: 10 }}>{card.icon}</div>
                                         <p style={{ color: "rgba(255,255,255,0.45)", margin: 0, fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px" }}>{card.label}</p>
@@ -129,10 +133,11 @@ export default function Dashboard() {
                                 ))}
                             </div>
 
+                            {/* Progress Bar */}
                             <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "20px 24px", marginBottom: 16 }}>
                                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
-                                    <h3 style={{ color: "white", margin: 0, fontSize: 15, fontWeight: 600 }}>Overall Progress</h3>
-                                    <span style={{ color: "#818cf8", fontSize: 14, fontWeight: 600 }}>{progress}%</span>
+                                    <h3 style={{ color: "white", margin: 0, fontSize: 14, fontWeight: 600 }}>Overall Progress</h3>
+                                    <span style={{ color: "#818cf8", fontSize: 13, fontWeight: 700 }}>{progress}%</span>
                                 </div>
                                 <div style={{ background: "rgba(255,255,255,0.08)", borderRadius: 10, height: 10, overflow: "hidden" }}>
                                     <div style={{
@@ -140,8 +145,19 @@ export default function Dashboard() {
                                         width: `${progress}%`,
                                         background: "linear-gradient(90deg, #4f46e5, #7c3aed)",
                                         borderRadius: 10,
-                                        transition: "width 1s ease"
-                                    }} />
+                                        transition: "width 1s ease",
+                                        position: "relative",
+                                        overflow: "hidden"
+                                    }}>
+                                        <div style={{
+                                            position: "absolute",
+                                            top: 0, left: "-100%",
+                                            width: "60%",
+                                            height: "100%",
+                                            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)",
+                                            animation: "shimmer 1.5s ease-in-out infinite"
+                                        }} />
+                                    </div>
                                 </div>
                                 <div style={{ display: "flex", gap: 20, marginTop: 12 }}>
                                     <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>✅ {stats.completed} completed</span>
@@ -150,8 +166,9 @@ export default function Dashboard() {
                                 </div>
                             </div>
 
+                            {/* Quick Actions */}
                             <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "20px 24px" }}>
-                                <h3 style={{ color: "white", margin: "0 0 14px", fontSize: 15, fontWeight: 600 }}>Quick Actions</h3>
+                                <h3 style={{ color: "white", margin: "0 0 14px", fontSize: 14, fontWeight: 600 }}>Quick Actions</h3>
                                 <div style={{ display: "flex", gap: 10 }}>
                                     {[
                                         { label: "Projects", href: "/projects", icon: "📁" },

@@ -1,23 +1,27 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../services/api";
+import AccountCreatedSplash from "../components/AccountCreatedSplash";
 
 export default function Signup() {
     const [form, setForm] = useState({ name: "", email: "", password: "", role: "MEMBER" });
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [showSplash, setShowSplash] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
         setLoading(true);
         try {
             await API.post("/auth/signup", form);
-            navigate("/login");
+            setShowSplash(true);
         } catch {
             setError("Signup failed. Email may already exist.");
         }
         setLoading(false);
     };
+
+    if (showSplash) return <AccountCreatedSplash onDone={() => navigate("/login")} />;
 
     return (
         <div style={{
@@ -49,9 +53,7 @@ export default function Signup() {
                         width: 64, height: 64,
                         background: "linear-gradient(135deg, #4f46e5, #7c3aed)",
                         borderRadius: 18,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
+                        display: "flex", alignItems: "center", justifyContent: "center",
                         fontSize: 30,
                         margin: "0 auto 16px",
                         boxShadow: "0 8px 32px rgba(79,70,229,0.4)"
@@ -65,11 +67,8 @@ export default function Signup() {
                         background: "rgba(220,38,38,0.15)",
                         border: "1px solid rgba(220,38,38,0.3)",
                         color: "#f87171",
-                        padding: 12,
-                        borderRadius: 10,
-                        marginBottom: 20,
-                        fontSize: 14,
-                        textAlign: "center"
+                        padding: 12, borderRadius: 10,
+                        marginBottom: 20, fontSize: 14, textAlign: "center"
                     }}>
                         {error}
                     </div>
@@ -80,15 +79,10 @@ export default function Signup() {
                     <input
                         placeholder="Enter your name"
                         style={{
-                            width: "100%",
-                            padding: "13px 16px",
-                            borderRadius: 12,
+                            width: "100%", padding: "13px 16px", borderRadius: 12,
                             border: "1px solid rgba(255,255,255,0.1)",
                             background: "rgba(255,255,255,0.07)",
-                            color: "white",
-                            fontSize: 14,
-                            boxSizing: "border-box",
-                            outline: "none"
+                            color: "white", fontSize: 14, boxSizing: "border-box", outline: "none"
                         }}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
                     />
@@ -100,15 +94,10 @@ export default function Signup() {
                         placeholder="Enter your email"
                         type="email"
                         style={{
-                            width: "100%",
-                            padding: "13px 16px",
-                            borderRadius: 12,
+                            width: "100%", padding: "13px 16px", borderRadius: 12,
                             border: "1px solid rgba(255,255,255,0.1)",
                             background: "rgba(255,255,255,0.07)",
-                            color: "white",
-                            fontSize: 14,
-                            boxSizing: "border-box",
-                            outline: "none"
+                            color: "white", fontSize: 14, boxSizing: "border-box", outline: "none"
                         }}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
                     />
@@ -120,15 +109,10 @@ export default function Signup() {
                         placeholder="Enter your password"
                         type="password"
                         style={{
-                            width: "100%",
-                            padding: "13px 16px",
-                            borderRadius: 12,
+                            width: "100%", padding: "13px 16px", borderRadius: 12,
                             border: "1px solid rgba(255,255,255,0.1)",
                             background: "rgba(255,255,255,0.07)",
-                            color: "white",
-                            fontSize: 14,
-                            boxSizing: "border-box",
-                            outline: "none"
+                            color: "white", fontSize: 14, boxSizing: "border-box", outline: "none"
                         }}
                         onChange={(e) => setForm({ ...form, password: e.target.value })}
                     />
@@ -138,15 +122,10 @@ export default function Signup() {
                     <label style={{ display: "block", marginBottom: 8, color: "rgba(255,255,255,0.7)", fontWeight: 500, fontSize: 13, letterSpacing: "0.5px", textTransform: "uppercase" }}>Role</label>
                     <select
                         style={{
-                            width: "100%",
-                            padding: "13px 16px",
-                            borderRadius: 12,
+                            width: "100%", padding: "13px 16px", borderRadius: 12,
                             border: "1px solid rgba(255,255,255,0.1)",
                             background: "rgba(255,255,255,0.07)",
-                            color: "white",
-                            fontSize: 14,
-                            boxSizing: "border-box",
-                            outline: "none"
+                            color: "white", fontSize: 14, boxSizing: "border-box", outline: "none"
                         }}
                         onChange={(e) => setForm({ ...form, role: e.target.value })}>
                         <option value="MEMBER" style={{ background: "#1e1e2e" }}>Member</option>
@@ -158,20 +137,13 @@ export default function Signup() {
                     onClick={handleSubmit}
                     disabled={loading}
                     style={{
-                        width: "100%",
-                        padding: "14px",
+                        width: "100%", padding: "14px",
                         background: loading ? "rgba(79,70,229,0.5)" : "linear-gradient(135deg, #4f46e5, #7c3aed)",
-                        color: "white",
-                        border: "none",
-                        borderRadius: 12,
-                        fontSize: 15,
-                        fontWeight: "bold",
+                        color: "white", border: "none", borderRadius: 12,
+                        fontSize: 15, fontWeight: "bold",
                         cursor: loading ? "not-allowed" : "pointer",
                         boxShadow: "0 4px 20px rgba(79,70,229,0.5)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: 10
+                        display: "flex", alignItems: "center", justifyContent: "center", gap: 10
                     }}>
                     {loading ? (
                         <>
@@ -187,20 +159,16 @@ export default function Signup() {
                     ) : "Create Account →"}
                 </button>
 
-                <style>{`
-          @keyframes spin {
-            to { transform: rotate(360deg); }
-          }
-          input::placeholder { color: rgba(255,255,255,0.25); }
-        `}</style>
-
                 <p style={{ textAlign: "center", marginTop: 24, color: "rgba(255,255,255,0.4)", fontSize: 14 }}>
                     Already have an account?{" "}
-                    <Link to="/login" style={{ color: "#818cf8", fontWeight: 600, textDecoration: "none" }}>
-                        Sign in
-                    </Link>
+                    <Link to="/login" style={{ color: "#818cf8", fontWeight: 600, textDecoration: "none" }}>Sign in</Link>
                 </p>
             </div>
+
+            <style>{`
+                @keyframes spin { to { transform: rotate(360deg); } }
+                input::placeholder { color: rgba(255,255,255,0.25); }
+            `}</style>
         </div>
     );
 }

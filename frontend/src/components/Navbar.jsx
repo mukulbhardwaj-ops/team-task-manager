@@ -29,19 +29,56 @@ export default function Navbar() {
             top: 0,
             zIndex: 100
         }}>
-            {/* Brand */}
+
             <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
-                    <div style={{
-                        width: 30, height: 30,
-                        background: "linear-gradient(135deg, #4f46e5, #7c3aed)",
-                        borderRadius: 8,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: 14,
-                        boxShadow: "0 4px 12px rgba(79,70,229,0.35)"
-                    }}>🗂</div>
+
+                    {/* Logo with orbital particle */}
+                    <div style={{ position: "relative", width: 30, height: 30 }}>
+                        <div style={{
+                            width: 30, height: 30,
+                            background: "linear-gradient(135deg, #4f46e5, #7c3aed)",
+                            borderRadius: 8,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: 14,
+                            boxShadow: "0 4px 12px rgba(79,70,229,0.35)"
+                        }}>🗂</div>
+
+                        {/* Ring */}
+                        <div style={{
+                            position: "absolute",
+                            top: -4, left: -4,
+                            width: 38, height: 38,
+                            borderRadius: 10,
+                            border: "1px solid rgba(129,140,248,0.2)",
+                            animation: "ringPulse 6s ease-in-out infinite",
+                            pointerEvents: "none"
+                        }} />
+
+                        {/* Orbiting particle */}
+                        <div style={{
+                            position: "absolute",
+                            top: -4, left: -4,
+                            width: 38, height: 38,
+                            borderRadius: 10,
+                            animation: "orbitParticle 6s linear infinite",
+                            pointerEvents: "none"
+                        }}>
+                            <div style={{
+                                position: "absolute",
+                                width: 5, height: 5,
+                                background: "white",
+                                borderRadius: "50%",
+                                top: -2, left: "50%",
+                                transform: "translateX(-50%)",
+                                boxShadow: "0 0 6px 2px rgba(129,140,248,0.9)",
+                            }} />
+                        </div>
+                    </div>
+
+                    {/* Brand text */}
                     <div>
                         <div style={{
                             fontSize: 11,
@@ -132,6 +169,20 @@ export default function Navbar() {
                     Logout
                 </button>
             </div>
+
+            <style>{`
+        @keyframes orbitParticle {
+          0%   { transform: rotate(0deg); opacity: 0; }
+          5%   { opacity: 1; }
+          80%  { opacity: 1; }
+          95%  { opacity: 0; }
+          100% { transform: rotate(360deg); opacity: 0; }
+        }
+        @keyframes ringPulse {
+          0%, 100% { border-color: rgba(129,140,248,0.15); }
+          50% { border-color: rgba(129,140,248,0.5); }
+        }
+      `}</style>
         </nav>
     );
 }
